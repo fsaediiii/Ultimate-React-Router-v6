@@ -6,11 +6,12 @@ import './Nav.css';
 
 const Nav = () => (
   <nav className='nav'>
-    <NavLink to="/" activeClassName="active" end>
+    <NavLink to="/" className='nav-link' activeClassName="active" end>
       Products
     </NavLink>
     <NavLink
       to="/admin"
+      className='nav-link'
       activeClassName="active"
       activeStyle={{ fontStyle: 'italic', fontWeight: 900 }}
     >
