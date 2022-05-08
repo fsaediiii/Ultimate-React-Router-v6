@@ -1,29 +1,55 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React, { lazy, useState } from 'react';
+import { BrowserRouter as Router, Navigate, useRoutes } from 'react-router-dom';
+import { css } from '@emotion/css';
 
-import Product from "./components/Product";
-import ProductIndex from "./components/Product/ProductIndex";
-import ProductItem from "./components/Product/ProductItem";
-import Admin from "./components/Admin";
-import Navbar from "./components/Common/Nav";
+import Nav from './components/Common/Nav';
+import Loadable from './components/Common/Loadable';
+import ScrollToTop from './components/Common/ScrollToTop';
 
-import "./App.css";
+const Products = Loadable(lazy(() => import('./components/Product/Products')));
+const Admin = Loadable(lazy(() => import('./components/Admin/Admin')));
 
-function App() {
-  return (
-    <div className="Container">
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Product />}>
-            <Route path="/" element={<ProductIndex />} />
-            <Route path="/product/:id" element={<ProductItem />} />
-          </Route>
-          <Route path="/admin" element={<Admin />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
-}
+const AppStyles = css`
+  margin: 50px auto;
+  width: 380px;
+  .Container {
+    background: #1d1e26;
+    border: 4px solid #9580ff;
+    border-radius: 6px;
+    padding: 25px;
+  }
+`;
 
-export default App;
+const App = () => {
+  const [authenticated] = useState(true);
+  const routes = useRoutes([
+    {
+      path: '/*',
+      element: <Products />,
+    },
+    {
+      path: '/admin*',
+      element: authenticated ? <Admin /> : <Navigate to="/" />,
+    },
+    {
+      path: '*',
+      element: <Navigate to="/" />,
+    },
+  ]);
+
+  return routes;
+};
+
+const AppWrapper = () => (
+  <div className={AppStyles}>
+    <Router>
+      <ScrollToTop />
+      <div className="Container">
+        <Nav />
+        <App />
+      </div>
+    </Router>
+  </div>
+);
+
+export default AppWrapper;
