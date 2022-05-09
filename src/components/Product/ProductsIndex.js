@@ -24,6 +24,7 @@ const ProductsIndexStyles = css`
         display: flex;
         align-items: center;
         cursor: pointer;
+        color: #fff;
       }
     }
   }

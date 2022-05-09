@@ -9,6 +9,9 @@ const ProductsIndex = Loadable(lazy(() => import('../Product/ProductsIndex')));
 
 const AdminStyles = css`
   .Admin {
+    &-Title {
+     color:#3fe368;
+    }
     &-Header {
       display: flex;
       align-items: center;
@@ -29,7 +32,7 @@ const AdminStyles = css`
 const Admin = () => (
   <div className={AdminStyles}>
     <div className="Admin-Header">
-      <h1>Admin</h1>
+      <h1 className="Admin-Title">Admin</h1>
       <Link to="new" className="Admin-New">
         New
       </Link>
